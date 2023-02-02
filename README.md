@@ -1,6 +1,6 @@
 # dw9_delivery_app
 
-A new Flutter project.
+Aplicativo de entregas feito na Imersão Dart Week.
 
 ## Getting Started
 
