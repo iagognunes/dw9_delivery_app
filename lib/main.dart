@@ -1,21 +1,9 @@
+import 'package:dw9_delivery_app/app/core/config/env/env.dart';
+import 'package:dw9_delivery_app/app/dw9_deliver_app.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() async {
+  await Env.instance.load();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
-  }
+  runApp(const Dw9DeliveryApp());
 }
