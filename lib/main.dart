@@ -5,5 +5,5 @@ import 'package:flutter/material.dart';
 void main() async {
   await Env.instance.load();
 
-  runApp(const Dw9DeliveryApp());
+  runApp(Dw9DeliveryApp());
 }

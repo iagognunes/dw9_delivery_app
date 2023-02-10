@@ -3,18 +3,20 @@ import 'package:dw9_delivery_app/app/core/extensions/formatter_extension.dart';
 import 'package:dw9_delivery_app/app/core/ui/styles/colors_app.dart';
 import 'package:dw9_delivery_app/app/core/ui/styles/text_styles.dart';
 import 'package:dw9_delivery_app/app/core/ui/widgets/delivery_inc_dec_button.dart';
+import 'package:dw9_delivery_app/app/pages/order/order_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dw9_delivery_app/app/dto/order_product_dto.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OrderProductTile extends StatelessWidget {
   final int index;
-  final OrderProductDto orderProductDto;
+  final OrderProductDto orderProduct;
 
   const OrderProductTile({
     super.key,
     required this.index,
-    required this.orderProductDto,
+    required this.orderProduct,
   });
 
   @override
@@ -23,9 +25,8 @@ class OrderProductTile extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: Row(
         children: [
-          // Image.asset(orderProductDto.product.image),
           Image.network(
-            'https://www.assai.com.br/sites/default/files/shutterstock_1806472312.jpg',
+            orderProduct.product.image,
             width: 100,
             height: 100,
             fit: BoxFit.cover,
@@ -37,7 +38,7 @@ class OrderProductTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    orderProductDto.product.name,
+                    orderProduct.product.name,
                     style:
                         context.textStyles.textRegular.copyWith(fontSize: 16),
                   ),
@@ -45,16 +46,25 @@ class OrderProductTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        orderProductDto.product.price.currencyPTBR,
+                        (orderProduct.amount * orderProduct.product.price)
+                            .currencyPTBR,
                         style: context.textStyles.textMedium.copyWith(
                           fontSize: 14,
                           color: context.colors.secondary,
                         ),
                       ),
                       DeliveryIncrementDecrementButton.compact(
-                        amount: 1,
-                        incrementTap: () {},
-                        decrementTap: () {},
+                        amount: orderProduct.amount,
+                        incrementTap: () {
+                          context
+                              .read<OrderController>()
+                              .incrementProduct(index);
+                        },
+                        decrementTap: () {
+                          context
+                              .read<OrderController>()
+                              .decrementProduct(index);
+                        },
                       ),
                     ],
                   ),
